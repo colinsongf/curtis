@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
 from qa.nlp import *
-import nltk
+
 import re
 
 def index(request):
