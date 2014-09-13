@@ -1,1 +1,1 @@
-web: gunicorn qa.wsgi --log-file -
+web: gunicorn curtis.wsgi --log-file -
