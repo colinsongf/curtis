@@ -87,7 +87,7 @@ def angleBetween(v1,v2):
 
 def buildMatrix(classes):
 	mat = np.zeros(0)
-	mat = updateFrequenciesForRow(nltk.word_tokenize("what is the price of what is the cost for whats how much does cost how much is"),classes.index("price"),mat)
-	mat = updateFrequenciesForRow(nltk.word_tokenize("how many people are in whats the population of what is"),classes.index("population"),mat)
-	mat = updateFrequenciesForRow(nltk.word_tokenize("schedule a meeting wtih schedule time with book time setup set up for on"),classes.index("schedule"),mat)
+	mat = updateFrequenciesForRow("what is the price of what is the cost for whats how much does cost how much is".split(" "),classes.index("price"),mat)
+	mat = updateFrequenciesForRow("how many people are in whats the population of what is".split(" "),classes.index("population"),mat)
+	mat = updateFrequenciesForRow("schedule a meeting wtih schedule time with book time setup set up for on".split(" "),classes.index("schedule"),mat)
 	return mat
