@@ -1,11 +1,12 @@
 from django.shortcuts import render
+from django.shortcuts import render_to_response
 from django.http import HttpResponse,JsonResponse
 from qa.nlp import *
 import nltk
 import re
 
 def index(request):
-	return HttpResponse("Good afternoon!")
+	return render_to_response("homepage.html")
 
 def question(request,qtext):
 	#setup
