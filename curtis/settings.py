@@ -82,4 +82,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-TEMPLATE_DIRS = ( os.path.dirname(__file__),)
+TEMPLATE_DIRS = ( os.path.dirname(__file__),os.path.dirname(__file__)+"/curtis",)
