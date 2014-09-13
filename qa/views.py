@@ -16,7 +16,9 @@ def question(request,qtext):
 	classList=["price","population","schedule"]
 	classificationMatrix = buildMatrix(classList)
 	#className=classify(qtext)
-	className = classList[classifyTokensWithMatrix(nltk.word_tokenize(qtext),classificationMatrix)]
+	toks = qtext.split(" ")
+	#className = classList[classifyTokensWithMatrix(nltk.word_tokenize(qtext),classificationMatrix)]
+	className = classList[classifyTokensWithMatrix(toks,classificationMatrix)]
 	if (className is None):
 		return HttpResponse("Couldn't classify.")
 	currentClass=types[className]
