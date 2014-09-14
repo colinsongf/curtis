@@ -87,8 +87,35 @@ def angleBetween(v1,v2):
 
 def buildMatrix(classes):
 	mat = np.zeros(0)
-	mat = updateFrequenciesForRow("what is the price of what is the cost for whats how much does cost how much is".split(" "),classes.index("price"),mat)
+	mat = updateFrequenciesForRow("what is the price of what is the cost for whats how much does cost how much is look up price".split(" "),classes.index("price"),mat)
 	mat = updateFrequenciesForRow("how many people are in whats the population of what is".split(" "),classes.index("population"),mat)
 	mat = updateFrequenciesForRow("schedule a meeting wtih schedule time with book time setup set up for on".split(" "),classes.index("schedule"),mat)
 	mat = updateFrequenciesForRow("what can you do what can I do what do you know how to do what can ask".split(" "),classes.index("help"),mat)
 	return mat
+
+def processTextForType(text,type):
+	#params: source text; dictionary containing name, action, and definitions for matched type
+	#returns Dict object with requested chunks.
+	chunks=[]
+	matchFound=False
+	definitions=type['definitions']
+	for definition in definitions:
+		matchRegexpDef = re.sub(r"<VAR:\w+>",r".*",definition)
+		if (re.search(matchRegexpDef,text,re.IGNORECASE)):
+			matchFound=True
+			regexps = createVariableRegexes(definition)
+			for i in range(0,len(regexps)):
+				value = extractChunk(text,regexps[i][1],regexps[i][2])
+				chunks.append([regexps[i][0],value])
+			if (matchFound):
+				break
+	if (matchFound):
+		return DictifyChunks(chunks)
+	else:
+		return dict()
+
+def DictifyChunks(chunks):
+	d = dict()
+	for chunk in chunks:
+		d[chunk[0]]=chunk[1]
+	return d
