@@ -16,7 +16,10 @@ def question(request,qtext):
 	classList=["price","population","schedule","help"]
 	classificationMatrix=buildMatrix(classList)
 	toks = qtext.split(" ")
-	className = classList[classifyTokensWithMatrix(toks,classificationMatrix)]
+	classIndex=classifyTokensWithMatrix(toks,classificationMatrix)
+	if (classIndex is None):
+		return HttpResponse("Hmmm...I'm not sure what you're asking me to do. Can you try rephrasing?")
+	className = classList[classIndex]
 	if (className is None):
 		return HttpResponse("Couldn't classify.")
 	currentClass=types[className]
