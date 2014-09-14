@@ -11,7 +11,7 @@ def index(request):
 
 def question(request,qtext):
 	#setup
-	types={'price':{'name':'price','action':getPrice,'definitions':[r"how much (is|does|for) (the\s|an\s|a\s)?<VAR:object>(cost)?",r"what(\sis|s|'s) the (cost|price) (of|for) (a\s|an\s)?<VAR:object>",r"(of|for) <VAR:object>"]},'schedule':{'name':'schedule','action':scheduleMeeting,'definitions':[r"(set up|setup|schedule|book|create) ((a|an) )?(meeting|appointment|event|time) with <VAR:person>\b(for|on|at)\b<VAR:time>"]},'population':{'name':'population','action':populationLookup,'definitions':[r".*(population of) <VAR:place>",r".*in <VAR:place>"]},'help':{'name':'help','action':help,'definitions':[]}}
+	types={'price':{'name':'price','action':getPrice,'definitions':[r"how much (is|does|for) (the\s|an\s|a\s)?<VAR:object>(cost)?",r"what(\sis|s|'s) the (cost|price) (of|for) (a\s|an\s)?<VAR:object>",r"(of|for) <VAR:object>"]},'schedule':{'name':'schedule','action':scheduleMeeting,'definitions':[r"(set up|setup|schedule|book|create) ((a|an) )?(meeting|appointment|event|time) with <VAR:person>\b(for|on|at)\b<VAR:time>",r"(set up|setup|schedule|book|create) ((a|an) )?(meeting|appointment|event|time) with <VAR:person>"]},'population':{'name':'population','action':populationLookup,'definitions':[r".*(population of) <VAR:place>",r".*in <VAR:place>"]},'help':{'name':'help','action':help,'definitions':[]}}
 	#tokenize... questionTokens = nltk.word_tokenize(qtext)
 	#then classify...
 	classList=["price","population","schedule","help"]
@@ -22,7 +22,8 @@ def question(request,qtext):
 		return HttpResponse("Couldn't classify.")
 	currentClass=types[className]
 	args = processTextForType(qtext,currentClass)
-	return HttpResponse(currentClass['action'](args))
+	response = currentClass['action'](args)
+	return HttpResponse(response)
 	#return JsonResponse(processTextForType(qtext,currentClass))
 
 
