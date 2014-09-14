@@ -13,7 +13,7 @@ def question(request,qtext):
 	#setup
 	#tokenize... questionTokens = nltk.word_tokenize(qtext)
 	#then classify...
-	classList=["price","population","schedule","help"]
+	classList=["price","population","schedule","help","greetings"]
 	classificationMatrix=buildMatrix(classList)
 	toks = qtext.split(" ")
 	classIndex=classifyTokensWithMatrix(toks,classificationMatrix)
