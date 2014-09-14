@@ -92,6 +92,7 @@ def buildMatrix(classes):
 	mat = updateFrequenciesForRow("schedule a meeting wtih schedule time with book time setup set up for on".split(" "),classes.index("schedule"),mat)
 	mat = updateFrequenciesForRow("what can you do what can I do what do you know how to do what can ask".split(" "),classes.index("help"),mat)
 	mat = updateFrequenciesForRow("hello hi hey curtis".split(" "),classes.index("greetings"),mat)
+	mat = updateFrequenciesForRow("whats number what is number what is phone number".split(" "),classes.index("phone"),mat)
 	return mat
 
 def processTextForType(text,type):
