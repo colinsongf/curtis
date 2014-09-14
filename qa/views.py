@@ -26,13 +26,13 @@ def question(request,qtext):
 
 def processTextForType(text,type):
 	#params: source text; dictionary containing name, action, and definitions for matched type
-	#returns JSON object with requested chunks.
+	#returns Dict object with requested chunks.
 	chunks=[]
 	matchFound=False
 	definitions=type['definitions']
 	for definition in definitions:
 		matchRegexpDef = re.sub(r"<VAR:\w+>",r".*",definition)
-		if (re.search(matchRegexpDef,text)):
+		if (re.search(matchRegexpDef,text,re.IGNORECASE)):
 			matchFound=True
 			regexps = createVariableRegexes(definition)
 			for i in range(0,len(regexps)):

@@ -18,7 +18,7 @@ def createVariableRegexes(definition):
 
 
 def extractChunk(src, regStart, regEnd):
-	startPosition=re.search(regStart,src)
+	startPosition=re.search(regStart,src,re.IGNORECASE)
 	if (startPosition):
 		startPosition=startPosition.end()
 	else:
@@ -26,7 +26,7 @@ def extractChunk(src, regStart, regEnd):
 	if (regEnd == ""):
 		endPosition=None
 	else:
-		endPosition	 =re.search(regEnd,src[startPosition:])
+		endPosition	 =re.search(regEnd,src[startPosition:],re.IGNORECASE)
 		if (endPosition):
 			if ((endPosition.start()==0) and (endPosition.end()==0)):
 				endPosition=None
