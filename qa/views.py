@@ -10,31 +10,19 @@ def index(request):
 
 def question(request,qtext):
 	#setup
-	types={'price':{'name':'price','action':'getPrice','definitions':[r"how much (is|does|for) (the|an|a)?<VAR:object>(cost)?",r"what(\sis|s|'s) the (cost|price) (of|for) (a\s|an\s)?<VAR:object>"]},'schedule':{'name':'schedule','action':'scheduleMeeting','definitions':[r"(set up|setup|schedule|book|create) ((a|an) )?(meeting|appointment|event|time) with <VAR:person>\b(for|on|at)\b<VAR:time>"]},'population':{'name':'population','action':'populationLookup','definitions':[r".*(population of) <VAR:place>",r".*in <VAR:place>"]}}
-	
+	types={'price':{'name':'price','action':getPrice,'definitions':[r"how much (is|does|for) (the|an|a)?<VAR:object>(cost)?",r"what(\sis|s|'s) the (cost|price) (of|for) (a\s|an\s)?<VAR:object>"]},'schedule':{'name':'schedule','action':scheduleMeeting,'definitions':[r"(set up|setup|schedule|book|create) ((a|an) )?(meeting|appointment|event|time) with <VAR:person>\b(for|on|at)\b<VAR:time>"]},'population':{'name':'population','action':populationLookup,'definitions':[r".*(population of) <VAR:place>",r".*in <VAR:place>"]},'help':{'name':'help','action':help,'definitions':[]}}
 	#tokenize... questionTokens = nltk.word_tokenize(qtext)
 	#then classify...
-	classList=["price","population","schedule"]
-	classificationMatrix = buildMatrix(classList)
-	#className=classify(qtext)
+	classList=["price","population","schedule","help"]
+	classificationMatrix=buildMatrix(classList)
 	toks = qtext.split(" ")
-	#className = classList[classifyTokensWithMatrix(nltk.word_tokenize(qtext),classificationMatrix)]
 	className = classList[classifyTokensWithMatrix(toks,classificationMatrix)]
 	if (className is None):
 		return HttpResponse("Couldn't classify.")
 	currentClass=types[className]
-	return JsonResponse(processTextForType(qtext,currentClass))
-
-def classify(text):
-	#this is dumb right now, just checking for certain words
-	if (re.match(r".*(much|price|cost|pay).*",text)):
-		return "price"
-	elif (re.match(r".*(schedule|setup|set up|book|create).*",text)):
-		return "schedule"
-	elif (re.match(r".*(how many people|population).*",text)):
-		return "population"
-	else:
-		return None
+	args = processTextForType(qtext,currentClass)
+	return HttpResponse(currentClass['action'](args))
+	#return JsonResponse(processTextForType(qtext,currentClass))
 
 def processTextForType(text,type):
 	#params: source text; dictionary containing name, action, and definitions for matched type
@@ -62,3 +50,15 @@ def DictifyChunks(chunks):
 	for chunk in chunks:
 		d[chunk[0]]=chunk[1]
 	return d
+
+def getPrice(args):
+	return "Price check on"+args["object"]
+
+def populationLookup(args):
+	return "There are 2000 people in "+args["place"]
+	
+def scheduleMeeting(args):
+	return "Your meeting with "+args["person"]+" is on the calendar for "+args["time"]
+	
+def help(args):
+	return "You can ask me about prices, populations, or to schedule a meeting"

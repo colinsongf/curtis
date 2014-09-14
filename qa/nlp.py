@@ -90,4 +90,5 @@ def buildMatrix(classes):
 	mat = updateFrequenciesForRow("what is the price of what is the cost for whats how much does cost how much is".split(" "),classes.index("price"),mat)
 	mat = updateFrequenciesForRow("how many people are in whats the population of what is".split(" "),classes.index("population"),mat)
 	mat = updateFrequenciesForRow("schedule a meeting wtih schedule time with book time setup set up for on".split(" "),classes.index("schedule"),mat)
+	mat = updateFrequenciesForRow("what can you do what can I do what do you know how to do what can ask".split(" "),classes.index("help"),mat)
 	return mat

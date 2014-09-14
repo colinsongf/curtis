@@ -1,6 +1,45 @@
 <html>
-<head>Question Answering</head>
+<head><title>Question Answering</title>
+<style>
+#content {
+	margin-left:auto;
+	margin-right:auto;
+	width: 60%;
+	text-align:center;
+}
+h1 {
+	font-family:"Helvetica Neue","Segoe UI","sans-serif";
+	font-weight:400;
+}
+#searchbox {
+	font-family:"Helvetica Neue","Segoe UI","sans-serif";
+	font-weight:400;
+	font-size:20px;
+	width:100%;
+}
+</style>
+<script src='{{ STATIC_URL }} /curtis/static/jquery.js'>
+</script>
+<script>
+	$(document).ready(function() {
+		$('#heading').html("What can I do for you?");
+		$("#searchbox").keydown(function(event) {
+			if (event.which == 13) {
+				$("#heading").html("Thinking...");
+				$.ajax({url: "q/"+$("#searchbox").val()}).done(function(data) {
+					$("#heading").html("What can I do for you?");
+					$("#answer").html(data);
+				});
+			}
+		});
+	});
+</script>
+</head>
 <body>
-<p>Hello there! What can I do for you?</p>
+<div id='content'>
+<h1 id='heading'></h1>
+<input type='text' id='searchbox' />
+<h1 id='answer'></h1>
+</div>
 </body>
 </html>
