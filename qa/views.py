@@ -11,7 +11,6 @@ def index(request):
 
 def question(request,qtext):
 	#setup
-	types={'price':{'name':'price','action':getPrice,'definitions':[r"how much (is|does|for) (the\s|an\s|a\s)?<VAR:object>(cost)?",r"what(\sis|s|'s) the (cost|price) (of|for) (a\s|an\s)?<VAR:object>",r"(of|for) <VAR:object>"]},'schedule':{'name':'schedule','action':scheduleMeeting,'definitions':[r"(set up|setup|schedule|book|create) ((a|an) )?(meeting|appointment|event|time) with <VAR:person>\b(for|on|at)\b<VAR:time>",r"(set up|setup|schedule|book|create) ((a|an) )?(meeting|appointment|event|time) with <VAR:person>"]},'population':{'name':'population','action':populationLookup,'definitions':[r".*(population of) <VAR:place>",r".*in <VAR:place>"]},'help':{'name':'help','action':help,'definitions':[]}}
 	#tokenize... questionTokens = nltk.word_tokenize(qtext)
 	#then classify...
 	classList=["price","population","schedule","help"]
